@@ -72,8 +72,6 @@ This project is focused on systems-level accuracy.
 
 ## References
 
-* [https://www.nesdev.org/wiki/INES](https://www.nesdev.org/wiki/INES)
-* [https://www.nesdev.org/wiki/CPU_6502](https://www.nesdev.org/wiki/CPU_6502)
-* [https://www.nesdev.org/wiki/Memory_map](https://www.nesdev.org/wiki/Memory_map)
+* [https://www.nesdev.org/wiki/6502_instructions](https://www.nesdev.org/wiki/6502_instructions)
 
 ---
