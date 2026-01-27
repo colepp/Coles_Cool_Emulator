@@ -1,4 +1,4 @@
-#include "file_parser.h"
+#include "./file_parser.h"
 
 const char NES_CONSTANT[NES_CONSTANT_SIZE] = { 'N', 'E', 'S', 0x1A };
 

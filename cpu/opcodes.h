@@ -99,12 +99,14 @@ void and_abs_x(CPU *cpu, MemoryBus *bus);
 void and_abs_y(CPU *cpu, MemoryBus *bus);
 void and_indr_x(CPU *cpu, MemoryBus *bus);
 void and_indr_y(CPU *cpu, MemoryBus *bus);
+void update_flags_and(CPU *cpu,uint8_t result);
 
 void asl_acc(CPU *cpu,MemoryBus *bus);
 void asl_zp(CPU *cpu,MemoryBus *bus);
 void asl_zp_x(CPU *cpu,MemoryBus *bus);
 void asl_abs(CPU *cpu,MemoryBus *bus);
 void asl_abs_x(CPU *cpu,MemoryBus *bus);
+void update_flags_asl(CPU *cpu,uint8_t result,uint8_t operand);
 
 void bcc(CPU *cpu,MemoryBus *bus);
 void bcs(CPU *cpu,MemoryBus *bus);
