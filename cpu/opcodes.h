@@ -1,5 +1,5 @@
 #ifndef OPCODES_H
-#define OPCODE_H
+#define OPCODES_H
 
 #include "cpu.h"
 
@@ -73,6 +73,57 @@
 #define DEX 0xCA
 #define DEY 0x88
 
+#define EOR_IMM 0x49
+#define EOR_ZP 0x45
+#define EOR_ZP_X 0x55
+#define EOR_ABS 0x4D
+#define EOR_ABS_X 0x5D
+#define EOR_ABS_Y 0x59
+#define EOR_INDR_X 0x41
+#define EOR_INDR_Y 0x51
+
+#define INC_ZP 0xE6
+#define INC_ZP_X 0xF6
+#define INC_ABS 0xEE
+#define INC_ABS_X 0xFE
+
+#define INX 0xE8
+#define INY 0xC8
+
+#define JMP_ABS 0x4C
+#define JMP_INDR 0x6C
+
+#define JSR 0x20
+
+#define LDA_IMM 0xA9
+#define LDA_ZP 0xA5
+#define LDA_ZP_X 0xB5
+#define LDA_ABS 0xAD
+#define LDA_ABS_X 0xBD
+#define LDA_ABS_Y 0xB9
+#define LDA_INDR_X 0xA1
+#define LDA_INDR_Y 0xB1
+
+#define LDX_IMM 0xA2
+#define LDX_ZP 0xA6
+#define LDX_ZP_Y 0xB6
+#define LDX_ABS 0xAE
+#define LDX_ABS_Y 0xBE
+
+#define LDY_IMM 0xA0
+#define LDY_ZP 0xA4
+#define LDY_ZP_X 0xB4
+#define LDY_ABS 0xAC
+#define LDY_ABS_X 0xBC
+
+#define LSR_ACC 0x4A
+#define LSR_ZP 0x46
+#define LSR_ZP_X 0x56
+#define LSR_ABS 0x4E
+#define LSR_ABS_X 0x5E
+
+#define NOP 0xEA
+
 
 
 #define BUILD_FULL_ADDRESS(low,high) (((high) << 8) | (low))
@@ -90,6 +141,7 @@ void adc_abs_x(CPU *cpu, MemoryBus *bus);
 void adc_abs_y(CPU *cpu, MemoryBus *bus);
 void adc_indr_x(CPU *cpu, MemoryBus *bus);
 void adc_indr_y(CPU *cpu, MemoryBus *bus);
+
 void update_flags_adc(CPU *cpu,uint16_t result,uint8_t operand);
 
 void and_imm(CPU *cpu, MemoryBus *bus);
@@ -100,6 +152,7 @@ void and_abs_x(CPU *cpu, MemoryBus *bus);
 void and_abs_y(CPU *cpu, MemoryBus *bus);
 void and_indr_x(CPU *cpu, MemoryBus *bus);
 void and_indr_y(CPU *cpu, MemoryBus *bus);
+
 void update_flags_and(CPU *cpu,uint8_t result);
 
 void asl_acc(CPU *cpu,MemoryBus *bus);
@@ -107,6 +160,7 @@ void asl_zp(CPU *cpu,MemoryBus *bus);
 void asl_zp_x(CPU *cpu,MemoryBus *bus);
 void asl_abs(CPU *cpu,MemoryBus *bus);
 void asl_abs_x(CPU *cpu,MemoryBus *bus);
+
 void update_flags_asl(CPU *cpu,uint8_t result,uint8_t operand);
 
 void bcc(CPU *cpu,MemoryBus *bus);
@@ -150,9 +204,6 @@ void cpy_abs(CPU *cpu, MemoryBus *bus);
 
 void update_flags_cmp(CPU *cpu,uint8_t result,uint8_t memory);
 
-
-
-
 void dec_zp(CPU *cpu, MemoryBus *bus);
 void dec_zp_x(CPU *cpu, MemoryBus *bus);
 void dec_abs(CPU *cpu, MemoryBus *bus);
@@ -161,7 +212,68 @@ void dec_abs_x(CPU *cpu, MemoryBus *bus);
 void dex(CPU *cpu, MemoryBus *bus);
 void dey(CPU *cpu, MemoryBus *bus);
 
-
 void update_flags_decrement(CPU *cpu,uint8_t result);
+
+void eor_imm(CPU *cpu, MemoryBus *bus);
+void eor_zp(CPU *cpu, MemoryBus *bus);
+void eor_zp_x(CPU *cpu, MemoryBus *bus);
+void eor_abs(CPU *cpu, MemoryBus *bus);
+void eor_abs_x(CPU *cpu, MemoryBus *bus);
+void eor_abs_y(CPU *cpu, MemoryBus *bus);
+void eor_indr_x(CPU *cpu, MemoryBus *bus);
+void eor_indr_y(CPU *cpu, MemoryBus *bus);
+
+void update_flags_eor(CPU *cpu,uint8_t  result);
+
+
+void inc_zp(CPU *cpu, MemoryBus *bus);
+void inc_zp_x(CPU *cpu, MemoryBus *bus);
+void inc_abs(CPU *cpu, MemoryBus *bus);
+void inc_abs_x(CPU *cpu, MemoryBus *bus);
+
+void inx(CPU *cpu, MemoryBus *bus);
+void iny(CPU *cpu, MemoryBus *bus);
+
+void update_flags_increment(CPU *cpu, uint8_t result);
+
+void jmp_abs(CPU *cpu, MemoryBus *bus);
+void jmp_indr(CPU *cpu, MemoryBus *bus);
+
+void jsr(CPU *cpu, MemoryBus *bus);
+
+void lda_imm(CPU *cpu, MemoryBus *bus);
+void lda_zp(CPU *cpu, MemoryBus *bus);
+void lda_zp_x(CPU *cpu, MemoryBus *bus);
+void lda_abs(CPU *cpu, MemoryBus *bus);
+void lda_abs_x(CPU *cpu, MemoryBus *bus);
+void lda_abs_y(CPU *cpu, MemoryBus *bus);
+void lda_indr_x(CPU *cpu, MemoryBus *bus);
+void lda_indr_y(CPU *cpu, MemoryBus *bus);
+
+void ldx_imm(CPU *cpu, MemoryBus *bus);
+void ldx_zp(CPU *cpu, MemoryBus *bus);
+void ldx_zp_y(CPU *cpu, MemoryBus *bus);
+void ldx_abs(CPU *cpu, MemoryBus *bus);
+void ldx_abs_y(CPU *cpu, MemoryBus *bus);
+
+void ldy_imm(CPU *cpu, MemoryBus *bus);
+void ldy_zp(CPU *cpu, MemoryBus *bus);
+void ldy_zp_x(CPU *cpu, MemoryBus *bus);
+void ldy_abs(CPU *cpu, MemoryBus *bus);
+void ldy_abs_x(CPU *cpu, MemoryBus *bus);
+
+void update_flags_load(CPU *cpu, uint8_t result);
+
+void lsr_acc(CPU *cpu, MemoryBus *bus);
+void lsr_zp(CPU *cpu, MemoryBus *bus);
+void lsr_zp_x(CPU *cpu, MemoryBus *bus);
+void lsr_abs(CPU *cpu, MemoryBus *bus);
+void lsr_abs_x(CPU *cpu, MemoryBus *bus);
+
+void update_flags_lsr(CPU *cpu, uint8_t result,uint8_t operand);
+
+void nop(CPU *cpu,MemoryBus *bus);
+
+
 
 #endif

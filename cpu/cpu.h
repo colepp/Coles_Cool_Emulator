@@ -28,12 +28,13 @@ typedef void (*Opcode)(CPU *,MemoryBus *);
 
 extern const Opcode opcode_table[];
 
-
 uint8_t fetch(CPU *cpu,MemoryBus *bus);
 
 Opcode decode(uint8_t b);
 
 void execute(CPU *cpu);
+
+CPU *init_cpu();
 
 
 #endif

@@ -7,7 +7,7 @@ MemoryBus *init_bus(Cartridge *c){
         if(cpu_ram){
             memory_bus->cartridge = c;
             memory_bus->cpu_ram = cpu_ram;
-            return cpu_ram;
+            return memory_bus;
         }
         free(memory_bus);
     }
