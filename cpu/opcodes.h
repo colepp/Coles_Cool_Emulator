@@ -77,6 +77,7 @@
 
 #define BUILD_FULL_ADDRESS(low,high) (((high) << 8) | (low))
 #define WRAP_ADD(x,y,wrapper) (((x) + (y)) % (wrapper))
+#define STACK_OFFSET(sp) ((sp) + 0x0100)
 
 
 
@@ -114,6 +115,7 @@ void beq(CPU *cpu,MemoryBus *bus);
 
 void bit_zp(CPU *cpu,MemoryBus *bus);
 void bit_abs(CPU *cpu,MemoryBus *bus);
+void update_flags_bit(CPU *cpu, uint8_t result, uint8_t memory);
 
 void bmi(CPU *cpu,MemoryBus *bus);
 void bne(CPU *cpu,MemoryBus *bus);
@@ -129,5 +131,37 @@ void cld(CPU *cpu,MemoryBus *bus);
 void cli(CPU *cpu,MemoryBus *bus);
 void clv(CPU *cpu,MemoryBus *bus);
 
+void cmp_imm(CPU *cpu, MemoryBus *bus);
+void cmp_zp(CPU *cpu, MemoryBus *bus);
+void cmp_zp_x(CPU *cpu, MemoryBus *bus);
+void cmp_abs(CPU *cpu, MemoryBus *bus);
+void cmp_abs_x(CPU *cpu, MemoryBus *bus);
+void cmp_abs_y(CPU *cpu, MemoryBus *bus);
+void cmp_indr_x(CPU *cpu, MemoryBus *bus);
+void cmp_indr_y(CPU *cpu, MemoryBus *bus);
+
+void cpx_imm(CPU *cpu, MemoryBus *bus);
+void cpx_zp(CPU *cpu, MemoryBus *bus);
+void cpx_abs(CPU *cpu, MemoryBus *bus);
+
+void cpy_imm(CPU *cpu, MemoryBus *bus);
+void cpy_zp(CPU *cpu, MemoryBus *bus);
+void cpy_abs(CPU *cpu, MemoryBus *bus);
+
+void update_flags_cmp(CPU *cpu,uint8_t result,uint8_t memory);
+
+
+
+
+void dec_zp(CPU *cpu, MemoryBus *bus);
+void dec_zp_x(CPU *cpu, MemoryBus *bus);
+void dec_abs(CPU *cpu, MemoryBus *bus);
+void dec_abs_x(CPU *cpu, MemoryBus *bus);
+
+void dex(CPU *cpu, MemoryBus *bus);
+void dey(CPU *cpu, MemoryBus *bus);
+
+
+void update_flags_decrement(CPU *cpu,uint8_t result);
 
 #endif

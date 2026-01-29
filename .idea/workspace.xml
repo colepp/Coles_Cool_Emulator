@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -21,11 +21,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5e9afd5-5abd-445a-852e-4f2af117581e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cpu/cpu.c" beforeDir="false" afterPath="$PROJECT_DIR$/cpu/cpu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cpu/cpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/cpu/cpu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/file_parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/parser/file_parser.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpu/opcodes.h" beforeDir="false" afterPath="$PROJECT_DIR$/cpu/opcodes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/general/units.h" beforeDir="false" afterPath="$PROJECT_DIR$/general/units.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/memory/memory_manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/memory/memory_manager.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +50,9 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="2.2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="38qV2ndWWH3jzlZJJT0jzMgJqVx" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -70,17 +73,18 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="CMake Debug.nesEmulator">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="nesEmulator" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <configuration name="file_parse_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="nesEmulator" TARGET_NAME="file_parse_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="nesEmulator" RUN_TARGET_NAME="file_parse_test">
       <method v="2">
@@ -106,6 +110,7 @@
       <option name="presentableId" value="Default" />
       <updated>1769526884956</updated>
       <workItem from="1769526886136" duration="1163000" />
+      <workItem from="1769611476600" duration="15813000" />
     </task>
     <servers />
   </component>

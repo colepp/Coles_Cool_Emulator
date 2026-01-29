@@ -15,6 +15,6 @@
 #define CARTRIDGE_RAM_SIZE 8192
 
 #define OPCODE_SIZE 256
-#define ZP_SIZE 256
+#define ZP_SIZE 0xFF
 
 #endif

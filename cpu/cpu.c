@@ -9,7 +9,7 @@ Opcode decode(uint8_t b){
     return opcode_table[b];
 }
 
-
+// ADD ACCUMULATOR
 void adc_imm(CPU *cpu, MemoryBus *bus){
 
     uint8_t imm_value = fetch(cpu,bus);
@@ -36,7 +36,7 @@ void adc_zp_x(CPU *cpu, MemoryBus *bus){
     uint8_t zp_base = fetch(cpu,bus);
     uint8_t zp_value = bus_read(WRAP_ADD(zp_base,cpu->X,ZP_SIZE),bus);
 
-    uint16_t result =  zp_value + cpu->A + (cpu->P & :CARRY);
+    uint16_t result =  zp_value + cpu->A + (cpu->P & CARRY);
 
     update_flags_adc(cpu,result,zp_value);
     cpu->A = (uint8_t) result;
@@ -86,8 +86,10 @@ void adc_abs_y(CPU *cpu,MemoryBus *bus){
 
 void adc_indr_x(CPU *cpu, MemoryBus *bus){
 
-    uint8_t low = cpu->X;
-    uint8_t high = low + 1;
+    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->X,ZP_SIZE);
+
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
 
     uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
@@ -101,10 +103,12 @@ void adc_indr_x(CPU *cpu, MemoryBus *bus){
 
 void adc_indr_y(CPU *cpu, MemoryBus *bus){
 
-    uint8_t low = cpu->Y;
-    uint8_t high = low + 1;
+    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->Y,ZP_SIZE);
 
-    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high,bus));
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
+
+    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
     uint8_t indr_value = bus_read(indr_addr,bus);
 
     uint16_t result = indr_value + cpu->A + (cpu->A & CARRY);
@@ -112,7 +116,6 @@ void adc_indr_y(CPU *cpu, MemoryBus *bus){
     update_flags_adc(cpu,result,indr_value);
     cpu->A = (uint8_t) result;
 }
-
 
 void update_flags_adc(CPU *cpu, uint16_t result,uint8_t operand){
     if(result == 0){
@@ -140,6 +143,7 @@ void update_flags_adc(CPU *cpu, uint16_t result,uint8_t operand){
     }
 }
 
+// AND
 void and_imm(CPU *cpu, MemoryBus *bus) {
 
   uint8_t imm_value = fetch(cpu,bus);
@@ -201,34 +205,37 @@ void and_abs_x(CPU *cpu, MemoryBus *bus){
 
 void and_indr_x(CPU *cpu, MemoryBus *bus){
 
-  uint8_t low = cpu->X;
-  uint8_t high = low + 1;
+  uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->X,ZP_SIZE);
+
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
   uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
   uint8_t indr_value = bus_read(indr_addr,bus);
 
   uint8_t result = cpu->A & indr_value;
 
-  update_flags_and(result,cpu);
+  update_flags_and(cpu,result);
   cpu->A = result;
 
 }
 
 void and_indr_y(CPU *cpu, MemoryBus *bus){
 
-  uint8_t low = cpu->Y;
-  uint8_t high = low + 1;
+    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->Y,ZP_SIZE);
+
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
   uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
   uint8_t indr_value = bus_read(indr_addr,bus);
 
   uint8_t result = cpu->A & indr_value;
 
-  update_flags_and(result,cpu);
+  update_flags_and(cpu,result);
   cpu->A = result;
 
 }
-
 
 void update_flags_and(CPU *cpu,uint8_t result){
   if (result == 0) {
@@ -240,13 +247,14 @@ void update_flags_and(CPU *cpu,uint8_t result){
   if (result & 0x80 ) {
     cpu->P |= NEGATIVE;
   }else {
-    cpu-> &= ~NEGATIVE;
+    cpu->P &= ~NEGATIVE;
   }
   cpu->A = result;
 
 }
 
-void asl_acc(CPU *cpu, uint8_t result){
+// ASL
+void asl_acc(CPU *cpu, MemoryBus *bus){
 
   uint8_t result = cpu->A << 1;
 
@@ -256,7 +264,7 @@ void asl_acc(CPU *cpu, uint8_t result){
 
 }
 
-void asl_zp(cpu *cpu, MemoryBus *bus){
+void asl_zp(CPU *cpu, MemoryBus *bus){
 
   uint8_t zp_addr = fetch(cpu,bus);
   uint8_t zp_value = bus_read(zp_addr,bus);
@@ -264,9 +272,44 @@ void asl_zp(cpu *cpu, MemoryBus *bus){
   uint8_t result = zp_value << 1;
 
   update_flags_asl(cpu,result,zp_value);
-  bus_write(result,zp_addr,bus);
+  bus_write(zp_addr,result,bus);
 }
 
+void asl_zp_x(CPU *cpu, MemoryBus *bus){
+    uint8_t  zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->X,ZP_SIZE);
+    uint8_t  zp_value = bus_read(zp_addr,bus);
+
+    uint8_t result = zp_value << 1;
+    update_flags_asl(cpu,result,zp_value);
+    bus_write(zp_addr,result,bus);
+}
+
+void asl_abs(CPU *cpu, MemoryBus *bus){
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t  abs_value = bus_read(abs_addr,bus);
+
+
+    uint8_t result = abs_value << 1;
+    update_flags_asl(cpu,result,abs_value);
+    bus_write(abs_addr,result,bus);
+
+}
+
+void asl_abs_x(CPU *cpu, MemoryBus *bus){
+        uint8_t low = fetch(cpu,bus);
+        uint8_t high = fetch(cpu,bus);
+
+        uint16_t abs_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->X;
+        uint8_t  abs_value = bus_read(abs_addr,bus);
+
+
+        uint8_t result = abs_value << 1;
+        update_flags_asl(cpu,result,abs_value);
+        bus_write(abs_addr,result,bus);
+};
 
 void update_flags_asl(CPU *cpu,uint8_t result, uint8_t operand){
 
@@ -291,6 +334,120 @@ void update_flags_asl(CPU *cpu,uint8_t result, uint8_t operand){
 }
 
 
+void bcc(CPU *cpu, MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(!(cpu->P & CARRY)){
+        cpu->PC += memory_val;
+    }
+}
+
+void bcs(CPU *cpu, MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(cpu->P & CARRY){
+        cpu->PC += memory_val;
+    }
+}
+
+// BIT
+void beq(CPU *cpu, MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(cpu->P & ZERO){
+        cpu->PC += memory_val;
+    }
+}
+
+void bit_zp(CPU *cpu, MemoryBus *bus){
+
+    uint8_t zp_addr = fetch(cpu,bus);
+    uint8_t zp_value = bus_read(zp_addr,bus);
+
+    uint8_t  result = cpu->A & zp_value;
+    update_flags_bit(cpu,result,zp_value);
+}
+
+void bit_abs(CPU *cpu, MemoryBus *bus){
+
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t  abs_value = bus_read(abs_addr,bus);
+
+    uint8_t  result = cpu->A & abs_value;
+    update_flags_bit(cpu,result,abs_value);
+
+}
+
+void update_flags_bit(CPU *cpu, uint8_t result, uint8_t memory){
+
+    if(result == 0){
+        cpu->P |= ZERO;
+    }else {
+        cpu->P &= ~ ZERO;
+    }
+
+    if(memory & 0x40){
+        cpu->P |= OVERFLOW;
+
+    }else{
+        cpu->P &= ~OVERFLOW;
+    }
+
+    if(memory & 0x80){
+        cpu->P |= NEGATIVE;
+    }else{
+        cpu->P &= ~NEGATIVE;
+    }
+
+}
+
+
+void bmi(CPU *cpu,MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(cpu->P & NEGATIVE){
+        cpu->PC += memory_val;
+    }
+}
+
+void bne(CPU *cpu,MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(!(cpu->P & ZERO)){
+        cpu->PC += memory_val;
+    }
+}
+
+void bpl(CPU *cpu,MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(!(cpu->P & NEGATIVE)){
+        cpu->PC += memory_val;
+    }
+}
+
+void brk(CPU *cpu, MemoryBus *bus){
+
+    bus_write(STACK_OFFSET(cpu->S--), (cpu->PC) >> 8,bus);
+    bus_write(STACK_OFFSET(cpu->S--),(cpu->PC),bus);
+    bus_write(STACK_OFFSET(cpu->S--),(cpu->P | B_FLAG),bus);
+    cpu->P |= INTURRUPT;
+    cpu->PC = BUILD_FULL_ADDRESS(bus_read(BRK_IRQ_VEC_LOW,bus), bus_read(BRK_IRQ_VEC_HIGH,bus));
+    // 0xFFFE and 0xFFFF IRQ / BRK Vector
+
+}
+
+void bvc(CPU *cpu, MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if(!(cpu->P & OVERFLOW)){
+        cpu->PC += memory_val;
+    }
+}
+
+void bvs(CPU *cpu, MemoryBus *bus){
+    int8_t memory_val = (int8_t) fetch(cpu,bus);
+    if((cpu->P & OVERFLOW)){
+        cpu->PC += memory_val;
+    }
+}
+
 
 void clc(CPU *cpu,MemoryBus *bus){
     if(cpu->P & CARRY){
@@ -303,13 +460,265 @@ void cld(CPU *cpu,MemoryBus *bus){
         cpu->P ^= DECIMAL;
     }
 }
+
 void cli(CPU *cpu,MemoryBus *bus){
     if(cpu->P & INTURRUPT){
         cpu->P ^= INTURRUPT;
     }
 }
+
 void clv(CPU *cpu,MemoryBus *bus){
     if(cpu->P & OVERFLOW){
         cpu->P ^= OVERFLOW;
+    }
+}
+
+
+void cmp_imm(CPU *cpu, MemoryBus *bus){
+
+    uint8_t imm_value = fetch(cpu,bus);
+
+    uint8_t result = cpu->A - imm_value;
+    update_flags_cmp(cpu,result,imm_value);
+}
+
+void cmp_zp(CPU *cpu, MemoryBus *bus){
+    uint8_t  zp_addr = fetch(cpu,bus);
+    uint8_t  zp_value = bus_read(zp_addr,bus);
+
+    uint8_t  result = cpu->A - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+}
+
+void cmp_zp_x(CPU *cpu, MemoryBus *bus){
+
+    uint8_t  zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->X,ZP_SIZE);
+    uint8_t  zp_value = bus_read(zp_addr,bus);
+
+    uint8_t  result = cpu->A - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+}
+
+void cmp_abs(CPU *cpu, MemoryBus *bus){
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t  abs_value = bus_read(abs_addr,bus);
+
+    uint8_t  result = cpu->A - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+
+}
+
+void cmp_abs_x(CPU *cpu, MemoryBus *bus){
+
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->X;
+    uint8_t  abs_value = bus_read(abs_addr,bus);
+
+    uint8_t  result = cpu->A - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+
+}
+
+void cmp_abs_y(CPU *cpu, MemoryBus *bus){
+
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->Y;
+    uint8_t  abs_value = bus_read(abs_addr,bus);
+
+    uint8_t  result = cpu->A - abs_value;
+    update_flags_cmp(cpu,result,abs_value);
+
+}
+
+void cmp_indr_x(CPU *cpu, MemoryBus *bus){
+    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->X,ZP_SIZE);
+
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
+
+    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t indr_value = bus_read(indr_addr,bus);
+
+    uint8_t  result = cpu->A - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+
+
+
+}
+
+void cmp_indr_y(CPU *cpu, MemoryBus *bus){
+    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->Y,ZP_SIZE);
+
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
+
+    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t indr_value = bus_read(indr_addr,bus);
+
+    uint8_t  result = cpu->A - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+
+
+
+}
+
+void cpx_imm(CPU *cpu, MemoryBus *bus){
+    uint8_t imm_value = fetch(cpu,bus);
+
+    uint8_t result = cpu->X - imm_value;
+    update_flags_cmp(cpu,result,imm_value);
+}
+
+void cpx_zp(CPU *cpu, MemoryBus *bus){
+
+    uint8_t zp_addr = fetch(cpu,bus);
+    uint8_t zp_value = bus_read(zp_value,bus);
+
+    uint8_t result = cpu->X - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+}
+
+void cpx_abs(CPU *cpu, MemoryBus *bus){
+
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t abs_value = bus_read(abs_addr,bus);
+
+
+    uint8_t result = cpu->X - abs_value;
+    update_flags_cmp(cpu,result,abs_value);
+}
+
+void cpy_imm(CPU *cpu, MemoryBus *bus){
+    uint8_t imm_value = fetch(cpu,bus);
+
+    uint8_t result = cpu->Y - imm_value;
+    update_flags_cmp(cpu,result,imm_value);
+}
+
+void cpy_zp(CPU *cpu, MemoryBus *bus){
+
+    uint8_t zp_addr = fetch(cpu,bus);
+    uint8_t zp_value = bus_read(zp_value,bus);
+
+    uint8_t result = cpu->Y - zp_value;
+    update_flags_cmp(cpu,result,zp_value);
+}
+
+void cpy_abs(CPU *cpu, MemoryBus *bus){
+
+    uint8_t low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t abs_value = bus_read(abs_addr,bus);
+
+
+    uint8_t result = cpu->Y - abs_value;
+    update_flags_cmp(cpu,result,abs_value);
+}
+
+void update_flags_cmp(CPU *cpu,uint8_t result,uint8_t memory){
+
+    if (cpu->A >= memory) {
+        cpu->P |= CARRY;
+    }else {
+        cpu->P &= ~CARRY;
+    }
+
+    if (cpu->A == memory) {
+        cpu->P |= ZERO;
+    }else {
+        cpu->P &= ~ZERO;
+    }
+
+
+    if (result & 0x80) {
+        cpu->P |= NEGATIVE;
+    }else {
+        cpu->P &= ~NEGATIVE;
+    }
+
+
+}
+
+void dec_zp(CPU *cpu, MemoryBus *bus){
+
+    uint8_t  zp_addr = fetch(cpu,bus);
+    uint8_t  zp_value = bus_read(zp_addr,bus);
+
+    uint8_t result = zp_value - 1;
+    update_flags_decrement(cpu,result);
+    bus_write(zp_addr,result,bus);
+
+}
+
+void dec_zp_x(CPU *cpu, MemoryBus *bus){
+
+    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->X,ZP_SIZE);
+    uint8_t  zp_value = bus_read(zp_addr,bus);
+
+    uint8_t result = zp_value - 1;
+    update_flags_decrement(cpu,result);
+    bus_write(zp_addr,result,bus);
+}
+
+void dec_abs(CPU *cpu, MemoryBus *bus){
+    uint8_t  low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = BUILD_FULL_ADDRESS(low,high);
+    uint8_t abs_value = bus_read(abs_addr,bus);
+
+    uint8_t result = abs_value - 1;
+    update_flags_decrement(cpu,result);
+    bus_write(abs_addr,result,bus);
+}
+void dec_abs_x(CPU *cpu, MemoryBus *bus){
+
+    uint8_t  low = fetch(cpu,bus);
+    uint8_t high = fetch(cpu,bus);
+
+    uint16_t abs_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->X;
+    uint8_t abs_value = bus_read(abs_addr,bus);
+
+    uint8_t result = abs_value - 1;
+    update_flags_decrement(cpu,result);
+    bus_write(abs_addr,result,bus);
+}
+
+void dex(CPU *cpu, MemoryBus *bus){
+
+    cpu->X--;
+    update_flags_decrement(cpu,cpu->X);
+
+}
+
+void dey(CPU *cpu, MemoryBus *bus){
+    cpu->Y--;
+    update_flags_decrement(cpu,cpu->Y);
+}
+
+
+void update_flags_decrement(CPU *cpu,uint8_t result){
+    if (result == 0){
+        cpu->P |= ZERO;
+    }else {
+        cpu->P &= ~ZERO;
+    }
+
+    if (result & 0x80){
+        cpu->P |= NEGATIVE;
+    }else{
+        cpu->P &= ~NEGATIVE;
     }
 }

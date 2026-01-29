@@ -21,6 +21,15 @@
 #define PRG_BANK_0_S 0x8000
 #define PRG_BANK_0_E 0xBFFF
 
+#define  NMI_VEC_LOW
+#define  NMI_VEC_HIGH
+
+#define RESET_VEC_LOW 0xFFFC
+#define RESET_VEC_HIGH 0xFFFD
+
+#define BRK_IRQ_VEC_LOW 0xFFFE
+#define BRK_IRQ_VEC_HIGH 0xFFFF
+
 
 
 #define CPU_MIRROR(x) ((x) % CPU_RAM_SIZE)

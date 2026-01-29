@@ -14,7 +14,6 @@
 #define OVERFLOW 0x40
 #define NEGATIVE 0x80
 
-
 typedef struct {
     uint8_t A;
     uint8_t X;

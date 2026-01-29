@@ -73,6 +73,12 @@ build CMakeFiles/file_parse_test.dir/memory/memory_manager.c.o: C_COMPILER__file
   OBJECT_DIR = CMakeFiles/file_parse_test.dir
   OBJECT_FILE_DIR = CMakeFiles/file_parse_test.dir/memory
 
+build CMakeFiles/file_parse_test.dir/cpu/cpu.c.o: C_COMPILER__file_parse_test_unscanned_Debug /Users/colepalmore/Desktop/Projects/nes_emu/Coles_Cool_Emulator/cpu/cpu.c || cmake_object_order_depends_target_file_parse_test
+  DEP_FILE = CMakeFiles/file_parse_test.dir/cpu/cpu.c.o.d
+  FLAGS = -g -std=gnu17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -mmacosx-version-min=15.3 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/file_parse_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/file_parse_test.dir/cpu
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target file_parse_test
@@ -81,7 +87,7 @@ build CMakeFiles/file_parse_test.dir/memory/memory_manager.c.o: C_COMPILER__file
 #############################################
 # Link the executable file_parse_test
 
-build file_parse_test: C_EXECUTABLE_LINKER__file_parse_test_Debug CMakeFiles/file_parse_test.dir/main.c.o CMakeFiles/file_parse_test.dir/parser/file_parser.c.o CMakeFiles/file_parse_test.dir/cartridge/cartridge.c.o CMakeFiles/file_parse_test.dir/memory/memory_manager.c.o
+build file_parse_test: C_EXECUTABLE_LINKER__file_parse_test_Debug CMakeFiles/file_parse_test.dir/main.c.o CMakeFiles/file_parse_test.dir/parser/file_parser.c.o CMakeFiles/file_parse_test.dir/cartridge/cartridge.c.o CMakeFiles/file_parse_test.dir/memory/memory_manager.c.o CMakeFiles/file_parse_test.dir/cpu/cpu.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk -mmacosx-version-min=15.3
   OBJECT_DIR = CMakeFiles/file_parse_test.dir
   POST_BUILD = :
