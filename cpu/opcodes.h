@@ -154,6 +154,17 @@
 #define RTI 0x40
 #define RTS 0x60
 
+#define SBC_IMM 0xE9
+#define SBC_ZP 0xE5
+#define SBC_ZP_X 0xF5
+#define SBC_ABS 0xED
+#define SBC_ABS_X 0xFD
+#define SBC_ABS_Y 0xF9
+#define SBC_INDR_X 0xE1
+#define SBC_INDR_Y 0xF1
+
+
+
 
 
 
@@ -340,6 +351,16 @@ void update_flags_rotate(CPU *cpu, uint8_t result, uint8_t operand);
 
 void rti(CPU *cpu, MemoryBus *bus);
 void rts(CPU *cpu, MemoryBus *bus);
+
+void sbc_imm(CPU *cpu, MemoryBus *bus);
+void sbc_zp(CPU *cpu, MemoryBus *bus);
+void sbc_zp_x(CPU *cpu, MemoryBus *bus);
+void sbc_abs(CPU *cpu, MemoryBus *bus);
+void sbc_abs_x(CPU *cpu, MemoryBus *bus);
+void sbc_abs_y(CPU *cpu, MemoryBus *bus);
+void sbc_indr_x(CPU *cpu, MemoryBus *bus);
+void sbc_indr_y(CPU *cpu, MemoryBus *bus);
+void update_flags_sbc(CPU *cpu, uint16_t result,uint8_t operand);
 
 
 #endif
