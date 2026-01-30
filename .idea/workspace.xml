@@ -20,17 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5e9afd5-5abd-445a-852e-4f2af117581e" name="Changes" comment="Updates and fixes to indr commands&#10;Finished left shif increment, breaks, branches, compare and &quot;and&quot; commands">
+    <list default="true" id="a5e9afd5-5abd-445a-852e-4f2af117581e" name="Changes" comment="Added XOR, increment jumps(regular and jump subroutine) load a, x and y, logical shift right and No-operation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-3a4e0b4ecff1b39bbca7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2026-01-27T15-23-34-0728.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-file_parse_test-Debug-956bb9d9415f9c09e72c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpu/cpu.c" beforeDir="false" afterPath="$PROJECT_DIR$/cpu/cpu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpu/cpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/cpu/cpu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpu/opcodes.h" beforeDir="false" afterPath="$PROJECT_DIR$/cpu/opcodes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memory/memory_manager.c" beforeDir="false" afterPath="$PROJECT_DIR$/memory/memory_manager.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memory/memory_manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/memory/memory_manager.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,18 +66,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="CMake Debug.nesEmulator">
     <configuration name="nesEmulator" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="file_parse_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="nesEmulator" TARGET_NAME="file_parse_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="nesEmulator" RUN_TARGET_NAME="file_parse_test">
       <method v="2">
@@ -112,7 +98,8 @@
       <option name="presentableId" value="Default" />
       <updated>1769526884956</updated>
       <workItem from="1769526886136" duration="1163000" />
-      <workItem from="1769611476600" duration="26521000" />
+      <workItem from="1769611476600" duration="27549000" />
+      <workItem from="1769783239600" duration="24000" />
     </task>
     <task id="LOCAL-00001" summary="Updates and fixes to indr commands&#10;Finished left shif increment, breaks, branches, compare and &quot;and&quot; commands">
       <option name="closed" value="true" />
@@ -122,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769697127154</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added XOR, increment jumps(regular and jump subroutine) load a, x and y, logical shift right and No-operation">
+      <option name="closed" value="true" />
+      <created>1769725863018</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769725863018</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +131,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updates and fixes to indr commands&#10;Finished left shif increment, breaks, branches, compare and &quot;and&quot; commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates and fixes to indr commands&#10;Finished left shif increment, breaks, branches, compare and &quot;and&quot; commands" />
+    <MESSAGE value="Added XOR, increment jumps(regular and jump subroutine) load a, x and y, logical shift right and No-operation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added XOR, increment jumps(regular and jump subroutine) load a, x and y, logical shift right and No-operation" />
   </component>
 </project>
