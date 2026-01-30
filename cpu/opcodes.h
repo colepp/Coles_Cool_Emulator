@@ -124,6 +124,40 @@
 
 #define NOP 0xEA
 
+#define ORA_IMM 0x09
+#define ORA_ZP 0x05
+#define ORA_ZP_X 0x15
+#define ORA_ABS 0x0D
+#define ORA_ABS_X 0x1D
+#define ORA_ABS_Y 0x19
+#define ORA_INDR_X 0x01
+#define ORA_INDR_Y 0x11
+
+#define PHA 0x48
+#define PHP 0x08
+
+#define PLA 0x68
+#define PLP 0x28
+
+#define ROL_ACC 0x2A
+#define ROL_ZP 0x26
+#define ROL_ZP_X 0x36
+#define ROL_ABS 0x2E
+#define ROL_ABS_X 0x3E
+
+#define ROR_ACC 0x6A
+#define ROR_ZP 0x66
+#define ROR_ZP_X 0x76
+#define ROR_ABS 0x6E
+#define ROR_ABS_X 0x7E
+
+#define RTI 0x40
+#define RTS 0x60
+
+
+
+
+
 
 
 #define BUILD_FULL_ADDRESS(low,high) (((high) << 8) | (low))
@@ -274,6 +308,38 @@ void update_flags_lsr(CPU *cpu, uint8_t result,uint8_t operand);
 
 void nop(CPU *cpu,MemoryBus *bus);
 
+void ora_imm(CPU *cpu, MemoryBus *bus);
+void ora_zp(CPU *cpu, MemoryBus *bus);
+void ora_zp_x(CPU *cpu, MemoryBus *bus);
+void ora_abs(CPU *cpu, MemoryBus *bus);
+void ora_abs_x(CPU *cpu, MemoryBus *bus);
+void ora_abs_y(CPU *cpu, MemoryBus *bus);
+void ora_indr_x(CPU *cpu, MemoryBus *bus);
+void ora_indr_y(CPU *cpu, MemoryBus *bus);
+void update_flags_ora(CPU *cpu,uint8_t result);
+
+void pha(CPU *cpu,MemoryBus *bus);
+void php(CPU *cpu,MemoryBus *bus);
+
+void pla(CPU *cpu,MemoryBus *bus);
+void plp(CPU *cpu,MemoryBus *bus);
+
+void rol_acc(CPU *cpu, MemoryBus *bus);
+void rol_zp(CPU *cpu, MemoryBus *bus);
+void rol_zp_x(CPU *cpu, MemoryBus *bus);
+void rol_abs(CPU *cpu, MemoryBus *bus);
+void rol_abs_x(CPU *cpu, MemoryBus *bus);
+
+void ror_acc(CPU *cpu, MemoryBus *bus);
+void ror_zp(CPU *cpu, MemoryBus *bus);
+void ror_zp_x(CPU *cpu, MemoryBus *bus);
+void ror_abs(CPU *cpu, MemoryBus *bus);
+void ror_abs_x(CPU *cpu, MemoryBus *bus);
+
+void update_flags_rotate(CPU *cpu, uint8_t result, uint8_t operand);
+
+void rti(CPU *cpu, MemoryBus *bus);
+void rts(CPU *cpu, MemoryBus *bus);
 
 
 #endif

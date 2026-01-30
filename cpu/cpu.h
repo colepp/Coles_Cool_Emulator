@@ -9,7 +9,7 @@
 #define ZERO 0x02
 #define INTURRUPT 0x04
 #define DECIMAL 0x08
-#define B_FLAG 0x10
+#define B_FLAG 0x10 // BREAK
 #define ONE_FLAG 0x20 // always pushed as one set this on init
 #define OVERFLOW 0x40
 #define NEGATIVE 0x80
