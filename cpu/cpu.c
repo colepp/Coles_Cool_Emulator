@@ -541,7 +541,7 @@ void cmp_indr_x(CPU *cpu, MemoryBus *bus){
     uint8_t low = bus_read(zp_addr,bus);
     uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
-    uint16_t indr_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->Y;
+    uint16_t indr_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->X;
     uint8_t indr_value = bus_read(indr_addr,bus);
 
     uint8_t  result = cpu->A - indr_value;
@@ -807,12 +807,12 @@ void eor_indr_x(CPU *cpu, MemoryBus *bus){
 }
 
 void eor_indr_y(CPU *cpu, MemoryBus *bus){
-    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->Y,ZP_SIZE);
+    uint8_t zp_addr = fetch(cpu,bus);
 
     uint8_t low = bus_read(zp_addr,bus);
     uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
-    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high);
+    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high) + cpu->Y;
     uint8_t  indr_value = bus_read(indr_addr,bus);
 
     uint8_t result = cpu->A ^ indr_value;
@@ -1286,12 +1286,12 @@ void ora_abs_y(CPU *cpu, MemoryBus *bus) {
 }
 
 void ora_indr_x(CPU *cpu,MemoryBus *bus) {
-    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->Y,ZP_SIZE);
+    uint8_t zp_addr = fetch(cpu,bus);
 
     uint8_t low = bus_read(zp_addr,bus);
     uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
-    uint16_t indr_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->Y;
+    uint16_t indr_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->X;
     uint8_t indr_value = bus_read(indr_addr,bus);
 
     uint8_t result = cpu->A | indr_value;
@@ -1301,12 +1301,12 @@ void ora_indr_x(CPU *cpu,MemoryBus *bus) {
 }
 
 void ora_indr_y(CPU *cpu, MemoryBus *bus) {
-    uint8_t zp_addr = WRAP_ADD(fetch(cpu,bus),cpu->,ZP_SIZE);
+    uint8_t zp_addr = fetch(cpu,bus);
 
     uint8_t low = bus_read(zp_addr,bus);
     uint8_t high = bus_read(WRAP_ADD(1,zp_addr,ZP_SIZE),bus);
 
-    uint16_t indr_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->X;
+    uint16_t indr_addr = (BUILD_FULL_ADDRESS(low,high)) + cpu->Y;
     uint8_t indr_value = bus_read(indr_addr,bus);
 
     uint8_t result = cpu->A | indr_value;
@@ -1542,7 +1542,7 @@ void sbc_abs(CPU *cpu, MemoryBus *bus) {
     cpu->A = (uint8_t) result;
 }
 
-void  sbc_abs_x(CPU *cpu, MemoryBus *bus) {
+void sbc_abs_x(CPU *cpu, MemoryBus *bus) {
     uint8_t low = fetch(cpu,bus);
     uint8_t high = fetch(cpu,bus);
 
@@ -1570,7 +1570,28 @@ void sbc_indr_x(CPU *cpu, MemoryBus *bus) {
     uint8_t zp_addr = fetch(cpu,bus);
 
     uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(zp_addr,1,ZP_SIZE),bus);
 
+    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high) + cpu->X;
+    uint8_t indr_value = bus_read(indr_addr,bus);
+
+    uint16_t result = cpu->A - indr_value - (cpu->P & CARRY);
+    update_flags_sbc(cpu,result,indr_value);
+    cpu->A = (uint8_t) result;
+}
+
+void sbc_indr_y(CPU *cpu, MemoryBus *bus) {
+    uint8_t zp_addr = fetch(cpu,bus);
+
+    uint8_t low = bus_read(zp_addr,bus);
+    uint8_t high = bus_read(WRAP_ADD(zp_addr,1,ZP_SIZE),bus);
+
+    uint16_t indr_addr = BUILD_FULL_ADDRESS(low,high) + cpu->Y;
+    uint8_t indr_value = bus_read(indr_addr,bus);
+
+    uint16_t result = cpu->A - indr_value - (cpu->P & CARRY);
+    update_flags_sbc(cpu,result,indr_value);
+    cpu->A = (uint8_t) result;
 }
 
 void update_flags_sbc(CPU *cpu, uint16_t result, uint8_t operand) {
@@ -1598,6 +1619,8 @@ void update_flags_sbc(CPU *cpu, uint16_t result, uint8_t operand) {
         cpu->P &= ~OVERFLOW;
     }
 }
+
+
 
 
 
